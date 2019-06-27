@@ -8,6 +8,9 @@ sudo rm -f /etc/yum/vars/releasever
 # enable EPEL
 sudo yum -y install epel-release
 
+# upgrade certs
+sudo sed -i 's/mirrorlist=https/mirrorlist=http/' /etc/yum.repos.d/*.repo
+
 # install all required packages for rocksdb that are available through yum
 sudo yum -y install openssl java-1.7.0-openjdk-devel zlib-devel bzip2-devel lz4-devel snappy-devel libzstd-devel jemalloc-devel
 
@@ -26,6 +29,6 @@ export JAVA_HOME=/usr/lib/jvm/java-1.7.0
 # build rocksdb
 cd /rocksdb
 scl enable devtoolset-2 'make jclean clean'
-scl enable devtoolset-2 'PORTABLE=1 make rocksdbjavastatic'
+scl enable devtoolset-2 'PORTABLE=1 DEBUG_LEVEL=0 make rocksdbjavastatic'
 cp /rocksdb/java/target/librocksdbjni-* /rocksdb-build
 cp /rocksdb/java/target/rocksdbjni-* /rocksdb-build

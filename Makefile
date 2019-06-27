@@ -1796,10 +1796,10 @@ rocksdbjavastatic: $(java_static_all_libobjects)
 	cd java/target;jar -uf $(ROCKSDB_JAR) META-INF/LICENSE
 
 rocksdbjavastaticrelease: rocksdbjavastatic
-	cd java/crossbuild && vagrant destroy -f && vagrant up linux32 && vagrant halt linux32 && vagrant up linux64 && vagrant halt linux64
+	cd java/crossbuild; vagrant destroy -f; vagrant up linux32 && vagrant halt linux32 && vagrant up linux64 && vagrant halt linux64
 	cd java;jar -cf target/$(ROCKSDB_JAR_ALL) HISTORY*.md
 	jar -uf java/target/$(ROCKSDB_JAR_ALL) HISTORY*.md
-	cd java/target;jar -uf $(ROCKSDB_JAR_ALL) librocksdbjni-*.so librocksdbjni-*.jnilib librocksdbjni-win64.dll
+	cd java/target;jar -uf $(ROCKSDB_JAR_ALL) librocksdbjni-*.so librocksdbjni-*.jnilib 
 	cd java/target/classes;jar -uf ../$(ROCKSDB_JAR_ALL) org/rocksdb/*.class org/rocksdb/util/*.class
 
 frocksdbjavastaticrelease: rocksdbjavastaticrelease
@@ -1818,14 +1818,14 @@ frocksdbjavastaticrelease: rocksdbjavastaticrelease
 	$(eval LINUX64_JAR=$(JAR_PREF)-linux64.jar)
 
 	# update windows jar
-	cd java/target;cp rocksdbjni_classes.jar $(WIN_JAR)
-	cd java;jar -uf target/$(WIN_JAR) HISTORY*.md
-	jar -uf java/target/$(WIN_JAR) HISTORY*.md
-	cd java/target;jar -uf $(WIN_JAR) librocksdbjni-win64.dll
-	cd java/target;jar -uf $(WIN_JAR) META-INF/LICENSE
+	# cd java/target;cp rocksdbjni_classes.jar $(WIN_JAR)
+	# cd java;jar -uf target/$(WIN_JAR) HISTORY*.md
+	# jar -uf java/target/$(WIN_JAR) HISTORY*.md
+	# cd java/target;jar -uf $(WIN_JAR) librocksdbjni-win64.dll
+	# cd java/target;jar -uf $(WIN_JAR) META-INF/LICENSE
 
 	# update linux 64 jar with ppc64 lib
-	cd java/target;jar -uf $(LINUX64_JAR) librocksdbjni-linux-ppc64le.so
+	# cd java/target;jar -uf $(LINUX64_JAR) librocksdbjni-linux-ppc64le.so
 
 	cd java/target;jar -uf $(JAR_DOCS) META-INF/LICENSE
 	cd java/target;jar -uf $(JAR_SOURCES) META-INF/LICENSE
@@ -1846,7 +1846,7 @@ frocksdbjavastaticrelease: rocksdbjavastaticrelease
 	cd java/target;cp $(JAR_DOCS) frocksdb-release/$(FJAR_DOCS)
 	cd java/target;cp $(JAR_SOURCES) frocksdb-release/$(FJAR_SOURCES)
 	cd java/target;cp $(OSX_JAR) frocksdb-release/$(OSX_FJAR)
-	cd java/target;cp $(WIN_JAR) frocksdb-release/$(WIN_FJAR)
+	# cd java/target;cp $(WIN_JAR) frocksdb-release/$(WIN_FJAR)
 	cd java/target;cp $(LINUX32_JAR) frocksdb-release/$(LINUX32_FJAR)
 	cd java/target;cp $(LINUX64_JAR) frocksdb-release/$(LINUX64_FJAR)
 	cd java;cp rocksjni.pom target/frocksdb-release/$(FJAR_PREF).pom
